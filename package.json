@@ -1,6 +1,6 @@
 {
   "name": "json-schema-from-path",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A utility to get the sub-schema from a JSON-schema from the path in an object",
   "main": "index.js",
   "scripts": {

@@ -22,6 +22,10 @@ var tests = [{
 	schema: {patternProperties: {".*": {type: "string"}}},
 	path: "foo",
 	realPath: ["patternProperties", ".*"]
+}, {
+		schema: { properties: { foo: { type: "string" } } },
+		path: "/foo/",
+		realPath: ["properties", "foo"]
 }]
 
 tests.forEach(function(test, index) {
