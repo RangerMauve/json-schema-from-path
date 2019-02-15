@@ -15,6 +15,10 @@ var tests = [{
 	path: "foo/0/bar",
 	realPath: ["properties", "foo", "items", "properties", "bar"]
 }, {
+    schema: {properties: {foo: {items: {properties: { bar: {type: "number"}}}}}},
+    path: "foo.0.bar",
+    realPath: ["properties", "foo", "items", "properties", "bar"]
+}, {
 	schema: {additionalProperties: {type: "string"}},
 	path: "foo",
 	realPath: ["additionalProperties"]
