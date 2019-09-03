@@ -62,7 +62,13 @@ assert.deepStrictEqual(
 		type: 'string',
 		value: 'hello world'
 	},
-	"Failed test for oneOf schemas"
+	"Failed test 1 for oneOf schemas"
+);
+
+assert.deepStrictEqual(
+	getSchemaFromPath(oneOfSchema, 'example.notFound'),
+	null,
+	"Failed test 2 for oneOf schemas"
 );
 
 function pluck(object, path) {

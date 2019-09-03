@@ -26,10 +26,12 @@ function getSchema(schema, segments) {
 				return getSchema(patterns[pattern], subSegments);
 			}
 		}
-	}else if(schema.additionalProperties) {
+	} else if (schema.additionalProperties) {
 		return getSchema(schema.additionalProperties, subSegments);
 	} else if (schema.items) {
-		return getSchema(schema.items, subSegments)
+		return getSchema(schema.items, subSegments);
+	} else if (schema.oneOf) {
+		return getSchema(schema.oneOf.filter(item => item.title === nextSegment)[0], subSegments);
 	} else {
 		// There's no deeper schema defined
 		return null;
