@@ -30,6 +30,14 @@ var tests = [{
 	schema: { properties: { foo: { type: "string" } } },
 	path: "/foo/",
 	realPath: ["properties", "foo"]
+}, {
+	schema: {properties: {example: {oneOf: [{title: 'target', type: 'string', value: 'hello world'}]}}},
+	path: "example.target",
+	realPath: ["properties", "example", "oneOf", 0]
+}, {
+	schema: {properties: {result: null, example: {oneOf: [{title: 'target', type: 'string', value: 'hello world'}]}}},
+	path: "example.notFound",
+	realPath: ["properties", "result"]
 }]
 
 tests.forEach(function(test, index) {
@@ -42,34 +50,6 @@ tests.forEach(function(test, index) {
 		"Failed test " + index
 	);
 });
-
-var oneOfSchema = {
-	properties: {
-		example: {
-			oneOf: [{
-				title: 'target',
-				type: 'string',
-				value: 'hello world'
-			}]
-		}
-	}
-};
-
-assert.deepStrictEqual(
-	getSchemaFromPath(oneOfSchema, 'example.target'),
-	{
-		title: 'target',
-		type: 'string',
-		value: 'hello world'
-	},
-	"Failed test 1 for oneOf schemas"
-);
-
-assert.deepStrictEqual(
-	getSchemaFromPath(oneOfSchema, 'example.notFound'),
-	null,
-	"Failed test 2 for oneOf schemas"
-);
 
 function pluck(object, path) {
 	var clone = path.slice();
