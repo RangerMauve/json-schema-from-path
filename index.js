@@ -31,7 +31,11 @@ function getSchema(schema, segments) {
 	} else if (schema.items) {
 		return getSchema(schema.items, subSegments);
 	} else if (schema.oneOf) {
-		return getSchema(schema.oneOf.filter(item => item.title === nextSegment)[0], subSegments);
+		// Find oneOf element that has a matching property for next segment:
+		var oneOfTarget = schema.oneOf.filter(item => {
+			return item.properties && item.properties[nextSegment]
+		})[0];
+		return getSchema(oneOfTarget && oneOfTarget.properties[nextSegment], subSegments);
 	} else {
 		// There's no deeper schema defined
 		return null;

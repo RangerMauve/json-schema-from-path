@@ -31,11 +31,11 @@ var tests = [{
 	path: "/foo/",
 	realPath: ["properties", "foo"]
 }, {
-	schema: {properties: {example: {oneOf: [{title: 'target', type: 'string', value: 'hello world'}]}}},
+	schema: {properties: {example: {oneOf: [{title: 'target', properties: {target: {type: 'string', value: 'hello world'}}}]}}},
 	path: "example.target",
-	realPath: ["properties", "example", "oneOf", 0]
+	realPath: ["properties", "example", "oneOf", 0, 'properties', 'target']
 }, {
-	schema: {properties: {result: null, example: {oneOf: [{title: 'target', type: 'string', value: 'hello world'}]}}},
+	schema: {properties: {result:null, example: {oneOf: [{title: 'target', properties: {target: {type: 'string', value: 'hello world'}}}]}}},
 	path: "example.notFound",
 	realPath: ["properties", "result"]
 }]
