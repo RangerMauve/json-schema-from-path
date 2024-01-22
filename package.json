@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/RangerMauve/json-schema-from-path/issues"
   },
-  "homepage": "https://github.com/RangerMauve/json-schema-from-path#readme"
+  "homepage": "https://github.com/RangerMauve/json-schema-from-path#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }
