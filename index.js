@@ -1,3 +1,4 @@
+const get = require('lodash/get');
 
 module.exports = getSchemaFromPath;
 getSchemaFromPath.default = getSchemaFromPath;
@@ -7,12 +8,12 @@ function getSchemaFromPath(schema, path) {
 	var segments = path.split(/[\/\.]/);
 	// Account for leading `/` or `.`
 	if(!segments[0]) segments = segments.slice(1);
-	return getSchema(schema, segments);
+	return getSchema(schema, segments, schema);
 }
 
-function getSchema(schema, segments) {
+function getSchema(schema, segments, rootSchema) {
 	if(!schema) return null;
-	if(!segments.length) return schema;
+	if(!segments.length && !schema.$ref) return schema;
 	if(segments.length === 1 && !segments[0]) return schema;
 	var nextSegment = segments[0];
 	var subSegments = segments.slice(1);
@@ -36,6 +37,12 @@ function getSchema(schema, segments) {
 			return item.properties && item.properties[nextSegment]
 		})[0];
 		return getSchema(oneOfTarget && oneOfTarget.properties[nextSegment], subSegments);
+	} else if (schema.$ref) {
+		const normalizeRefPath = schema.$ref
+			.replace(/^#\//, '')
+			.replaceAll('/', '.');
+		const schemaByPath = get(rootSchema, normalizeRefPath);
+		return getSchema(schemaByPath, segments, rootSchema);
 	} else {
 		// There's no deeper schema defined
 		return null;
